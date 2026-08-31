@@ -33,8 +33,8 @@ ARG MAPPROXY_VERSION=7.0.0
 ENV MAPPROXY_VERSION=${MAPPROXY_VERSION}
 ENV PATH="${PATH}:/mapproxy/.local/bin"
 
-RUN mkdir /mapproxy && addgroup -S mapproxy && \
-    adduser -D -s /bin/sh -S -h /mapproxy/ -G mapproxy mapproxy && \
+RUN mkdir /mapproxy && addgroup -g 1000 -S mapproxy && \
+    adduser -D -s /bin/sh -S -h /mapproxy/ -G mapproxy -u 1000 mapproxy && \
     chown -R mapproxy:mapproxy /mapproxy
 
 WORKDIR /mapproxy
