@@ -26,11 +26,15 @@ RUN rm -rf dist/* && \
 FROM base-libs AS base
 
 ARG MAPPROXY_VERSION=7.0.0
+ARG USER_UID=1000
+ARG USER_GID=1000
+
 ENV MAPPROXY_VERSION=${MAPPROXY_VERSION}
 ENV PATH="${PATH}:/mapproxy/.local/bin"
 
-RUN mkdir /mapproxy && groupadd --gid 1000 mapproxy && \
-    useradd --uid 1000 --home-dir /mapproxy -s /bin/bash -g mapproxy mapproxy && \
+RUN mkdir /mapproxy && \
+    groupadd --gid $USER_GID mapproxy && \
+    useradd --uid $USER_UID --gid $USER_GID --home-dir /mapproxy -s /bin/bash mapproxy && \
     chown -R mapproxy:mapproxy /mapproxy
 
 WORKDIR /mapproxy

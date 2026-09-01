@@ -30,11 +30,14 @@ RUN rm -rf dist/* \
 FROM base-libs AS base
 
 ARG MAPPROXY_VERSION=7.0.0
+ARG USER_UID=1000
+ARG USER_GID=1000
+
 ENV MAPPROXY_VERSION=${MAPPROXY_VERSION}
 ENV PATH="${PATH}:/mapproxy/.local/bin"
 
-RUN mkdir /mapproxy && addgroup -g 1000 -S mapproxy && \
-    adduser -D -s /bin/sh -S -h /mapproxy/ -G mapproxy -u 1000 mapproxy && \
+RUN mkdir /mapproxy && addgroup -g $USER_GID -S mapproxy && \
+    adduser -D -s /bin/sh -S -h /mapproxy/ -G mapproxy -u $USER_UID mapproxy && \
     chown -R mapproxy:mapproxy /mapproxy
 
 WORKDIR /mapproxy

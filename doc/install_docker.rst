@@ -107,3 +107,11 @@ So if you want to build the alpine nginx image, the command would look like this
 .. code-block:: sh
 
   docker build -f Dockerfile-alpine --target nginx -t ghcr.io/mapproxy/mapproxy/mapproxy:latest-alpine-nginx .
+
+By default, user `mapproxy` (`1000:1000`) is created in the image and used to run the processes.
+If you want to run the image as a different user, you can set the `USER_UID` and `USER_GID` build arguments to your desired values.
+For example, to build the alpine image with user ID 2000 and group ID 2000, you would run:
+
+.. code-block:: sh
+
+  docker build -f Dockerfile-alpine --build-arg USER_UID=2000 --build-arg USER_GID=2000 --target nginx -t ghcr.io/mapproxy/mapproxy/mapproxy:latest-alpine-nginx .
